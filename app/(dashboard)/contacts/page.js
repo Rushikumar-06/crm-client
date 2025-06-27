@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -31,6 +30,8 @@ export default function ContactsPage() {
   const [tagFilter, setTagFilter] = useState('');
   const [page, setPage] = useState(0);
   const limit = 10;
+
+  const selectAllRef = useRef();
 
   const { data: contacts = [], isLoading } = useQuery({
     queryKey: ['contacts'],
@@ -65,10 +66,28 @@ export default function ContactsPage() {
 
   const paginated = filtered.slice(page * limit, (page + 1) * limit);
 
+  // Select all logic
+  useEffect(() => {
+    if (!bulkMode) return;
+    if (!selectAllRef.current) return;
+    const allIds = paginated.map(c => c._id);
+    const selectedOnPage = allIds.filter(id => selectedContacts.includes(id));
+    selectAllRef.current.indeterminate = selectedOnPage.length > 0 && selectedOnPage.length < allIds.length;
+  }, [bulkMode, paginated, selectedContacts]);
+
   const handleSelect = (id) => {
     setSelectedContacts((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
+  };
+
+  const handleSelectAll = (e) => {
+    const allIds = paginated.map(c => c._id);
+    if (e.target.checked) {
+      setSelectedContacts(prev => Array.from(new Set([...prev, ...allIds])));
+    } else {
+      setSelectedContacts(prev => prev.filter(id => !allIds.includes(id)));
+    }
   };
 
   const handleDeleteSelected = async () => {
@@ -135,7 +154,16 @@ export default function ContactsPage() {
         <Table>
           <TableHeader>
             <TableRow>
-              {bulkMode && <TableHead><input type="checkbox" disabled /></TableHead>}
+              {bulkMode && (
+                <TableHead>
+                  <input
+                    type="checkbox"
+                    ref={selectAllRef}
+                    checked={paginated.length > 0 && paginated.every(c => selectedContacts.includes(c._id))}
+                    onChange={handleSelectAll}
+                  />
+                </TableHead>
+              )}
               <TableHead>Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Company</TableHead>
