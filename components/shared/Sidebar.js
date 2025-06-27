@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard,
@@ -23,16 +22,17 @@ export default function Sidebar({ collapsed = false }) {
     <aside className={`transition-all duration-300 h-full flex flex-col justify-between bg-gradient-to-b from-indigo-100 via-white to-blue-50 border-r shadow-md ${collapsed ? 'w-20 p-2' : 'w-64 p-4'}`}>
       <div>
         <div className={`flex items-center mb-6 ${collapsed ? 'justify-center' : 'space-x-3'}`}>
-          <Avatar className={collapsed ? 'h-8 w-8' : ''}>
-            <AvatarImage src={user?.photoURL} />
-            <AvatarFallback>{user?.displayName?.charAt(0)}</AvatarFallback>
-          </Avatar>
-          {!collapsed && (
-            <div>
-              <p className="font-semibold text-sm">{user?.displayName}</p>
-              <p className="text-xs text-muted-foreground">{user?.email}</p>
+          <div className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'}`}>
+            <div className="bg-indigo-600 text-white rounded-lg p-2">
+              <Contact className="h-6 w-6" />
             </div>
-          )}
+            {!collapsed && (
+              <div>
+                <h1 className="font-bold text-lg text-indigo-800">ContactPro</h1>
+                <p className="text-xs text-indigo-600">CRM System</p>
+              </div>
+            )}
+          </div>
         </div>
         <nav className="space-y-1">
           <Button variant="ghost" className={`w-full justify-start rounded-lg transition-all ${collapsed ? 'px-2 py-3 flex items-center justify-center' : ''}`} onClick={() => router.push('/dashboard')} title="Dashboard">

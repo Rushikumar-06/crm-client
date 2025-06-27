@@ -76,7 +76,7 @@ export default function ActivitiesPage() {
                   <div className="font-semibold text-gray-700">
                     {a.action.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} — <span className="text-indigo-600">{a.entityName}</span>
                   </div>
-                  {a.metadata?.count && <div className="text-sm text-gray-500">Imported {a.metadata.count} items</div>}
+                  {a.metadata?.count && <div className="text-sm text-gray-500"> {a.action === 'bulk_import' ? 'Imported' : 'Deleted'} {a.metadata.count} items</div>}
                   {a.metadata?.updatedFields && (
                     <div className="text-sm text-gray-500">Updated Fields: {a.metadata.updatedFields.join(', ')}</div>
                   )}

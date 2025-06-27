@@ -141,7 +141,6 @@ export default function TagsPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-4 space-y-10">
-        {/* Tag Creation Card */}
         <Card className="border-l-8 border-indigo-500/80 bg-white/90 shadow-xl">
           <CardHeader>
             <CardTitle className="text-indigo-700">Create a New Tag</CardTitle>
