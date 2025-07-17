@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
 import { getFirebaseIdToken } from '@/lib/firebaseAuth';
+import { getBackendUrl } from '@/lib/utils';
 
 export default function ProfilePage() {
   const { user, setUser } = useAuth();
@@ -31,7 +32,7 @@ export default function ProfilePage() {
 
     try {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/user/update-photo', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/update-photo`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,7 +55,7 @@ export default function ProfilePage() {
   const handleDisplayNameUpdate = async () => {
     try {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/user/update-name', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/update-name`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

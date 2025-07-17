@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { getFirebaseIdToken } from '@/lib/firebaseAuth'; 
 import AddEditContactModal from '../AddEditContactModal';
+import { getBackendUrl } from '@/lib/utils';
 
 export default function ContactDetailsPage() {
   const { user } = useAuth();
@@ -16,7 +17,7 @@ export default function ContactDetailsPage() {
 
   const fetchContact = async () => {
     const token = await getFirebaseIdToken();
-    const res = await fetch(`http://localhost:5000/api/contacts/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -29,7 +30,7 @@ export default function ContactDetailsPage() {
 
   const handleDelete = async () => {
     const token = await getFirebaseIdToken();
-    await fetch(`http://localhost:5000/api/contacts/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` },
     });

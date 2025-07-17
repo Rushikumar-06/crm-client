@@ -32,7 +32,7 @@ export default function TagsPage() {
     queryKey: ['tags'],
     queryFn: async () => {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/tags', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -50,7 +50,7 @@ export default function TagsPage() {
     setLoading(true);
     try {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/tags', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export default function TagsPage() {
     setLoading(true);
     try {
       const token = await getFirebaseIdToken();
-      const res = await fetch(`http://localhost:5000/api/tags/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -111,7 +111,7 @@ export default function TagsPage() {
     setLoading(true);
     try {
       const token = await getFirebaseIdToken();
-      const res = await fetch(`http://localhost:5000/api/tags/${editingTag._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags/${editingTag._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

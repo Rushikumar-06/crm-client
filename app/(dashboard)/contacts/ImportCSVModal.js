@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useQueryClient } from '@tanstack/react-query';
 import { getFirebaseIdToken } from '@/lib/firebaseAuth';
 import { Upload, FileText, X, CheckCircle, AlertCircle } from 'lucide-react';
+import { getBackendUrl } from '@/lib/utils';
 
 export default function ImportCSVModal({ onClose }) {
   const [file, setFile] = useState(null);
@@ -66,7 +67,7 @@ export default function ImportCSVModal({ onClose }) {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:5000/api/contacts/import', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts/import`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

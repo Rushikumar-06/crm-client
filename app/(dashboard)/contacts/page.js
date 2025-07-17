@@ -14,6 +14,7 @@ import AddEditContactModal from './AddEditContactModal';
 import ImportCSVModal from './ImportCSVModal';
 import { getFirebaseIdToken } from '@/lib/firebaseAuth';
 import { useAuth } from '@/context/AuthContext';
+import { getBackendUrl } from '@/lib/utils';
 
 export default function ContactsPage() {
   const { user } = useAuth();
@@ -37,7 +38,7 @@ export default function ContactsPage() {
     queryKey: ['contacts'],
     queryFn: async () => {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/contacts', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.json();
@@ -92,7 +93,7 @@ export default function ContactsPage() {
   const handleDeleteSelected = async () => {
     const token = await getFirebaseIdToken();
 
-    await fetch('http://localhost:5000/api/contacts/bulk-delete', {
+    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts/bulk-delete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

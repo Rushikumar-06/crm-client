@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/AuthContext';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getFirebaseIdToken } from '@/lib/firebaseAuth';
+import { getBackendUrl } from '@/lib/utils';
 
 export default function AddEditContactModal({ onClose, contact }) {
   const isEdit = !!contact;
@@ -26,7 +27,7 @@ export default function AddEditContactModal({ onClose, contact }) {
     queryKey: ['available-tags'],
     queryFn: async () => {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/tags', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.json();
@@ -51,8 +52,8 @@ export default function AddEditContactModal({ onClose, contact }) {
     const token = await getFirebaseIdToken();
     const method = isEdit ? 'PUT' : 'POST';
     const url = isEdit
-      ? `http://localhost:5000/api/contacts/${contact._id}`
-      : 'http://localhost:5000/api/contacts';
+      ? `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts/${contact._id}`
+      : `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/contacts`;
 
     await fetch(url, {
       method,

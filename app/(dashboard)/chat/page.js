@@ -22,12 +22,12 @@ export default function ChatPage() {
   useEffect(() => {
     if (!user) return;
 
-    socket.current = io('http://localhost:5000');
+    socket.current = io(process.env.NEXT_PUBLIC_BACKEND_URL);
     socket.current.on('connect', () => console.log('Socket connected'));
 
     const fetchConversations = async () => {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/conversations', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/conversations`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -74,7 +74,7 @@ export default function ChatPage() {
 
   const startNewConversation = async () => {
     const token = await getFirebaseIdToken();
-    const res = await fetch('http://localhost:5000/api/conversations', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/conversations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

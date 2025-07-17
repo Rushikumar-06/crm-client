@@ -8,7 +8,7 @@ export default function TagSelector({ value, onChange }) {
     queryKey: ['tags'],
     queryFn: async () => {
       const token = await getFirebaseIdToken();
-      const res = await fetch('http://localhost:5000/api/tags', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/tags`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.json();

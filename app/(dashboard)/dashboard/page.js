@@ -8,6 +8,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   LineChart, Line, PieChart, Pie, Cell, Legend, CartesianGrid
 } from 'recharts';
+import { getBackendUrl } from '@/lib/utils';
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#00c49f'];
 
@@ -30,10 +31,10 @@ export default function DashboardPage() {
         };
 
         const [summaryRes, companyRes, timelineRes, tagRes] = await Promise.all([
-          fetchWithAuth('http://localhost:5000/api/dashboard/summary'),
-          fetchWithAuth('http://localhost:5000/api/dashboard/contacts-by-company'),
-          fetchWithAuth('http://localhost:5000/api/dashboard/activities-timeline'),
-          fetchWithAuth('http://localhost:5000/api/dashboard/tag-distribution'),
+          fetchWithAuth(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard/summary`),
+          fetchWithAuth(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard/contacts-by-company`),
+          fetchWithAuth(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard/activities-timeline`),
+          fetchWithAuth(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard/tag-distribution`),
         ]);
 
         setSummary(summaryRes);

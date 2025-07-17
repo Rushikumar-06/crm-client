@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getBackendUrl } from '@/lib/utils';
 
 const ACTIVITY_ICONS = {
   contact_created: '🟢',
@@ -33,7 +34,7 @@ export default function ActivitiesPage() {
     queryFn: async ({ pageParam = 0 }) => {
       const token = await getFirebaseIdToken();
       const res = await fetch(
-        `http://localhost:5000/api/activities?page=${pageParam}&action=${actionFilter}&start=${startDate}&end=${endDate}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/activities?page=${pageParam}&action=${actionFilter}&start=${startDate}&end=${endDate}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       return res.json();
