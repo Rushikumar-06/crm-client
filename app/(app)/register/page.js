@@ -19,6 +19,7 @@ export default function RegisterPage() {
   const [displayName, setDisplayName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   useEffect(() => {
     if (user && !loading) {
@@ -30,6 +31,10 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       setError('');
+      if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
       await register(email, password, displayName);
       router.push("/profile");
     } catch (err) {
@@ -77,9 +82,7 @@ export default function RegisterPage() {
             </Alert>
           )}
 
-          {/* Register Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Display Name Input */}
             <div className="space-y-2">
               <label htmlFor="displayName" className="text-sm font-medium text-gray-700">
                 Full name
@@ -98,7 +101,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Email Input */}
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-gray-700">
                 Email address
@@ -117,7 +119,6 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Password Input */}
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm font-medium text-gray-700">
                 Password
@@ -147,7 +148,24 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Submit Button */}
+            <div className="space-y-2">
+              <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Input
+                  id="confirmPassword"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Re-enter your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10 pr-10 h-11 border-gray-200 focus:border-green-500 focus:ring-green-500"
+                  required
+                />
+              </div>
+            </div>
+
             <Button 
               type="submit" 
               className="w-full h-11 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
@@ -157,7 +175,6 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          {/* Divider */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200" />
@@ -167,7 +184,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Google Register */}
           <Button 
             type="button" 
             variant="outline" 
@@ -184,7 +200,6 @@ export default function RegisterPage() {
             Continue with Google
           </Button>
 
-          {/* Login Link */}
           <div className="text-center">
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
