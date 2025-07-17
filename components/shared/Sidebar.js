@@ -51,7 +51,7 @@ export default function Sidebar({ collapsed = false }) {
             <Tag className="h-5 w-5" />
             {!collapsed && <span className="ml-3">Tags</span>}
           </Button>
-          <Button variant="ghost" className={`w-full justify-start rounded-lg transition-all ${collapsed ? 'px-2 py-3 flex items-center justify-center' : ''}`} onClick={() => router.push('/ai')} title="AI Assistant">
+          <Button variant="ghost" className={`w-full justify-start rounded-lg transition-all ${collapsed ? 'px-2 py-3 flex items-center justify-center' : ''}`} onClick={() => router.push('/chat')} title="AI Assistant">
             <Bot className="h-5 w-5" />
             {!collapsed && <span className="ml-3">AI Assistant</span>}
           </Button>

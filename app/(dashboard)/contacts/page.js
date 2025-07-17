@@ -66,7 +66,6 @@ export default function ContactsPage() {
 
   const paginated = filtered.slice(page * limit, (page + 1) * limit);
 
-  // Select all logic
   useEffect(() => {
     if (!bulkMode) return;
     if (!selectAllRef.current) return;

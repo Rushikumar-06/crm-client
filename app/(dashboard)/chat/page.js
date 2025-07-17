@@ -94,7 +94,6 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-50">
-      {/* Sidebar */}
       <Card className="w-72 min-w-60 bg-white/90 border-l-4 border-indigo-500/80 shadow-xl flex flex-col">
         <CardHeader className="pb-2">
           <Button onClick={startNewConversation} className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-semibold shadow-md hover:from-indigo-600 hover:to-blue-600">
